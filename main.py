@@ -2,14 +2,17 @@ import pygame
 #imports all constants from the file
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import *
 
  #create groups
 updatable = pygame.sprite.Group()
 drawable = pygame.sprite.Group()
-asteroid = pygame.sprite.Group()
+asteroids = pygame.sprite.Group()
 
 Player.containers = (updatable, drawable)
-Asteroid.containers = (asteroid, updatable, drawable)
+Asteroid.containers = (asteroids, updatable, drawable)
+AsteroidField.containers = (updatable)
 
 def main():
     #initialize pygame
@@ -23,10 +26,15 @@ def main():
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2 
     player = Player(x,y)
+    
+    fields = AsteroidField()
+    updatable.add(fields)
 
     #fill the groups
     updatable.add(player)
     drawable.add(player)
+    
+    
    
     #GAME LOOP
     #makes the x button usable
