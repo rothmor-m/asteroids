@@ -45,18 +45,26 @@ def main():
                 return 
     #1. check for player inputs
     #2. update the game world
+    #set fps to 60 and save delta time to dt
+        dt = fps.tick(60) / 1000
     #3. drawing the game onto the screen
     
         #makes the display black
         screen.fill((0,0,0), rect=None, special_flags=0)
-        #set fps to 60 and save delta time to dt
-        dt = fps.tick(60) / 1000
+        
         #draw the player(triangle)
         for sprite in drawable:
             sprite.draw(screen)
         #rotate left and right
         for sprite in updatable:
             sprite.update(dt)
+        for asteroid in asteroids:
+            if player.collision(asteroid):
+                print("Game Over")
+                running = False
+                break
+        if not running:
+            break
         #keep showing the display with everything that was drawn
         pygame.display.flip()
         
