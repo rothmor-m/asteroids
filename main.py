@@ -34,6 +34,8 @@ def main():
         dt = fps.tick(60) / 1000
         #draw the player(triangle)
         player.draw(screen)
+        #rotate left and right
+        player.update(dt)
         #keep showing the display with everything that was drawn
         pygame.display.flip()
         
