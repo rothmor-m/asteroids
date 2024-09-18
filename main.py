@@ -3,6 +3,14 @@ import pygame
 from constants import *
 from player import Player
 
+ #create groups
+updatable = pygame.sprite.Group()
+drawable = pygame.sprite.Group()
+asteroid = pygame.sprite.Group()
+
+Player.containers = (updatable, drawable)
+Asteroid.containers = (asteroid, updatable, drawable)
+
 def main():
     #initialize pygame
     pygame.init()
@@ -16,7 +24,10 @@ def main():
     y = SCREEN_HEIGHT / 2 
     player = Player(x,y)
 
-
+    #fill the groups
+    updatable.add(player)
+    drawable.add(player)
+   
     #GAME LOOP
     #makes the x button usable
     running = True
@@ -33,9 +44,11 @@ def main():
         #set fps to 60 and save delta time to dt
         dt = fps.tick(60) / 1000
         #draw the player(triangle)
-        player.draw(screen)
+        for sprite in drawable:
+            sprite.draw(screen)
         #rotate left and right
-        player.update(dt)
+        for sprite in updatable:
+            sprite.update(dt)
         #keep showing the display with everything that was drawn
         pygame.display.flip()
         
